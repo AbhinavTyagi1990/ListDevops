@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
 
 
 export class PostCreateComponent{
-
+    newPost = 'Test1';
+    onAddPost() {
+        
+    }
 }
