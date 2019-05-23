@@ -21,10 +21,11 @@ app.use((req, res, next) => {
 app.post("/posts", (req, res, next) => {
   const post = req.body;
   console.log(post);
-  res.send(201).json({
-    message: "Post Added"
+  res.status(201).json({
+    message: 'Post added successfully'
   });
 });
+
 
 app.use("/posts", (req, res, next) => {
   const posts = [
