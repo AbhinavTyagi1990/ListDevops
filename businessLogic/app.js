@@ -1,7 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const Post = require("./models/post");
 const app = express();
-
+mongoose.connect('mongodb+srv://Abhinav:<Password>@cluster0-7elrf.mongodb.net/unlimitedPost?retryWrites=true&w=majority',{ useNewUrlParser: true })
+.then(()=>{
+  console.log('Connected');
+})
+.catch((e)=>{
+  console.log(e);
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -19,30 +27,28 @@ app.use((req, res, next) => {
 });
 
 app.post("/posts", (req, res, next) => {
-  const post = req.body;
-  console.log(post);
-  res.send(201).json({
-    message: "Post Added"
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
+  post.save();
+  res.status(201).json({
+    message: 'Post added successfully'
   });
 });
 
-app.use("/posts", (req, res, next) => {
-  const posts = [
-    {
-      id: "2165767",
-      title: "First",
-      content: "This is server"
-    },
-    {
-      id: "21hjgsadh7",
-      title: "Second",
-      content: "This is server two"
-    }
-  ];
-  res.status(200).json({
-    message: "Hello",
-    posts: posts
+
+app.get("/posts", (req, res, next) => {
+  let posts = [];
+  Post.find().then(document => {
+    res.status(200).json({
+      message: "Hello",
+      posts: document
+    });
+  }).catch((e)=>{
+    console.log(e);
   });
+  
 });
 
 module.exports = app;
