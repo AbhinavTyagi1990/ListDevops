@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Post = require("./models/post");
 const app = express();
-mongoose.connect('mongodb+srv://Abhinav:<Password>@cluster0-7elrf.mongodb.net/unlimitedPost?retryWrites=true&w=majority',{ useNewUrlParser: true })
+mongoose.connect('mongodb+srv://Abhinav:1em1dSca0JKk581s@cluster0-7elrf.mongodb.net/unlimitedPost?retryWrites=true&w=majority',{ useNewUrlParser: true })
 .then(()=>{
   console.log('Connected');
 })
@@ -33,16 +33,15 @@ app.post("/posts", (req, res, next) => {
   });
   post.save();
   res.status(201).json({
-    message: 'Post added successfully'
+    message: "Added"
   });
 });
 
 
 app.get("/posts", (req, res, next) => {
-  let posts = [];
+  
   Post.find().then(document => {
     res.status(200).json({
-      message: "Hello",
       posts: document
     });
   }).catch((e)=>{
@@ -51,4 +50,12 @@ app.get("/posts", (req, res, next) => {
   
 });
 
+app.delete('/posts/:id', (req, res, next) => {
+  Post.deleteOne({_id: req.params.id}).then(()=> {
+    res.status(200).json({
+      message: "Post deleted"
+    })
+  })
+  
+});
 module.exports = app;
