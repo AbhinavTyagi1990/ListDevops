@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Post = require("./models/post");
 const app = express();
-mongoose.connect('mongodb+srv://Abhinav:1em1dSca0JKk581s@cluster0-7elrf.mongodb.net/unlimitedPost?retryWrites=true&w=majority',{ useNewUrlParser: true })
+mongoose.connect('mongodb+srv://Abhinav:<Password>@cluster0-7elrf.mongodb.net/unlimitedPost?retryWrites=true&w=majority',{ useNewUrlParser: true })
 .then(()=>{
   console.log('Connected');
 })
